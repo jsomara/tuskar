@@ -1,5 +1,5 @@
 Name:	      openstack-tuskar
-Version:	  0.3
+Version:	  0.4
 Release:	  1%{?dist}
 Summary:	  A service for managing OpenStack deployments
 
@@ -92,6 +92,9 @@ mv %{buildroot}%{_datadir}/etc/tuskar/tuskar.conf.sample %{buildroot}%{_sysconfd
 %config(noreplace) %attr(0640, root, apache) %{_sysconfdir}/tuskar/tuskar.conf
 
 %changelog
+* Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> 0.4-1
+- Minor fixes for httpd.conf location (jomara@redhat.com)
+
 * Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> 0.3-1
 - Automatic commit of package [openstack-tuskar] release [0.2-1].
   (jomara@redhat.com)

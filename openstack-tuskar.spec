@@ -1,5 +1,5 @@
 Name:	      openstack-tuskar
-Version:	  0.2
+Version:	  0.3
 Release:	  1%{?dist}
 Summary:	  A service for managing OpenStack deployments
 
@@ -93,6 +93,18 @@ mv %{buildroot}%{_datadir}/etc/tuskar/tuskar.conf.sample %{buildroot}%{_sysconfd
 %config(noreplace) %attr(0640, root, apache) %{_sysconfdir}/tuskar/tuskar.conf
 
 %changelog
+* Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> 0.3-1
+- Automatic commit of package [openstack-tuskar] release [0.2-1].
+  (jomara@redhat.com)
+- Initialized to use tito. (jomara@redhat.com)
+- Initial commit of spec file, wsgi file and apache module for wsgi
+  (jomara@redhat.com)
+- Merge "Getting correct count and attributes from database"
+  (jenkins@review.openstack.org)
+- Merge "Fix tuskar docs building" (jenkins@review.openstack.org)
+- Fix tuskar docs building (jason.dobies@redhat.com)
+- Getting correct count and attributes from database (lsmola@redhat.com)
+
 * Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> 0.2-1
 - new package built with tito
 

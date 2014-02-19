@@ -47,7 +47,7 @@ ensure SLAs, improve performance, and maximize utilization across the
 datacenter.
 
 %prep
-%setup -q -n tuskar-%{version}
+%setup -q -n openstack-tuskar-%{version}
 
 %build
 %configure

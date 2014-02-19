@@ -1,12 +1,12 @@
 Name:	      openstack-tuskar
-Version:	  0.1
+Version:	  0.2
 Release:	  1%{?dist}
 Summary:	  A service for managing OpenStack deployments
 
 Group:		  Application/System
 License:	  ASL 2.0
 URL:		    https://github.com/openstack/tuskar
-Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/tuskar-%{version}.tar.gz
+Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/openstack-tuskar-%{version}.tar.gz
 Source1:    tuskar-httpd-2.4.conf
 
 BuildRequires: python2-devel
@@ -93,5 +93,8 @@ mv %{buildroot}%{_datadir}/etc/tuskar/tuskar.conf.sample %{buildroot}%{_sysconfd
 %config(noreplace) %attr(0640, root, apache) %{_sysconfdir}/tuskar/tuskar.conf
 
 %changelog
+* Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> 0.2-1
+- new package built with tito
+
 * Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> - 0.0.1-1
 - initial package

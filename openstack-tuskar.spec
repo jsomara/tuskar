@@ -11,6 +11,7 @@ Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/openstack-tuskar-%{version}
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
 BuildRequires: python-lockfile
+BuildRequires: python-pbr
 
 Requires: httpd
 Requires: mod_wsgi

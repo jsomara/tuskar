@@ -50,7 +50,6 @@ datacenter.
 %setup -q -n openstack-tuskar-%{version}
 
 %build
-%configure
 %{__python} setup.py build
 
 %install

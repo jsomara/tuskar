@@ -7,7 +7,6 @@ Group:		  Application/System
 License:	  ASL 2.0
 URL:		    https://github.com/openstack/tuskar
 Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/openstack-tuskar-%{version}.tar.gz
-Source1:    tuskar-httpd-2.4.conf
 
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
@@ -56,7 +55,7 @@ datacenter.
 
 %install
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
-install -m 0644 -D -p %{SOURCE2} %{buildroot}%{_sysconfdir}/httpd/conf.d/tuskar.conf
+install -m 0644 -D -p %{buildroot}%{_datadir}/etc/tuskar-httpd.conf  %{buildroot}%{_sysconfdir}/httpd/conf.d/tuskar.conf
 
 install -d -m 755 %{buildroot}%{_datadir}/tuskar
 install -d -m 755 %{buildroot}%{_sharedstatedir}/tuskar

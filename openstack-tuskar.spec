@@ -6,7 +6,7 @@ Summary:	  A service for managing OpenStack deployments
 Group:		  Application/System
 License:	  ASL 2.0
 URL:		    https://github.com/openstack/tuskar
-Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/openstack-tuskar-%{version}.tar.gz
+Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/tuskar-%{version}.tar.gz
 
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
@@ -49,7 +49,7 @@ ensure SLAs, improve performance, and maximize utilization across the
 datacenter.
 
 %prep
-%setup -q -n openstack-tuskar-%{version}
+%setup -q -n tuskar-%{version}
 
 %build
 export OSLO_PACKAGE_VERSION=1.2.0

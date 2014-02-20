@@ -1,5 +1,5 @@
 Name:	      openstack-tuskar
-Version:	  0.8
+Version:	  0.0.8
 Release:	  1%{?dist}
 Summary:	  A service for managing OpenStack deployments
 
@@ -7,6 +7,8 @@ Group:		  Application/System
 License:	  ASL 2.0
 URL:		    https://github.com/openstack/tuskar
 Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/tuskar-%{version}.tar.gz
+
+BuildArch:     noarch
 
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
@@ -17,7 +19,7 @@ BuildRequires: python-sphinx >= 1.1.3
 Requires: httpd
 Requires: mod_wsgi
 Requires: python-pbr
-Requires: python27-python-sqlalchemy
+Requires: python-sqlalchemy
 Requires: python-migrate
 Requires: python-setuptools_git
 Requires: python-amqplib
@@ -36,9 +38,9 @@ Requires: python-wsme
 Requires: PyYAML
 Requires: python-oslo-config
 Requires: python-novaclient
-Requires: python-keystone-client
+Requires: python-keystoneclient
 Requires: python-heatclient
-Requires: tripleo-heat-templates
+Requires: openstack-tripleo-heat-templates
 
 %description
 Tuskar gives administrators the ability to control how and where OpenStack
@@ -58,47 +60,33 @@ export OSLO_PACKAGE_VERSION=1.2.0
 %install
 export OSLO_PACKAGE_VERSION=1.2.0
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
-install -m 0644 -D -p %{buildroot}/etc/tuskar-httpd.conf  %{buildroot}%{_sysconfdir}/httpd/conf.d/tuskar.conf
+install -m 0644 -D -p etc/tuskar-httpd.conf  %{buildroot}%{_sysconfdir}/httpd/conf.d/tuskar.conf
 
-install -d -m 755 %{buildroot}%{_datadir}/tuskar
 install -d -m 755 %{buildroot}%{_sharedstatedir}/tuskar
 install -d -m 755 %{buildroot}%{_sysconfdir}/tuskar
+install -d -m 755 %{buildroot}/srv/tuskar
 
-# Copy everything to /usr/share
-mv %{buildroot}%{python_sitelib}/tuskar \
-   %{buildroot}%{_datadir}/tuskar
-mv manage.py %{buildroot}%{_datadir}/tuskar
-rm -rf %{buildroot}%{python_sitelib}/tuskar
+install -m 0644 -D -p etc/tuskar.wsgi  %{buildroot}/srv/tuskar/tuskar.wsgi
 
 # Move config to /etc
-mv %{buildroot}%{_datadir}/etc/tuskar/tuskar.conf.sample %{buildroot}%{_sysconfdir}/tuskar/tuskar.conf
+mv etc/tuskar/tuskar.conf.sample %{buildroot}%{_sysconfdir}/tuskar/tuskar.conf
 
 %files
 %doc LICENSE README.rst
-%dir %{_datadir}/tuskar/
-%{_datadir}/tuskar/*.py*
-%{_datadir}/tuskar/tools/
-%{_datadir}/tuskar/tuskar/*.py*
-%{_datadir}/tuskar/tuskar/api
-%{_datadir}/tuskar/tuskar/cmd
-%{_datadir}/tuskar/tuskar/common
-%{_datadir}/tuskar/tuskar/db
-%{_datadir}/tuskar/tuskar/heat
-%{_datadir}/tuskar/tuskar/manager
-%{_datadir}/tuskar/tuskar/openstack
-%{_datadir}/tuskar/tuskar/tests
-%{_datadir}/tuskar/tuskar/wsgi
-
+%{python_sitelib}/tuskar
+%{python_sitelib}/*.egg-info
+# binaries for tuskar
+%{_bindir}/tuskar-api
+%{_bindir}/tuskar-dbsync
+%{_bindir}/tuskar-manager
+%dir /srv/tuskar
+/srv/tuskar/tuskar.wsgi
 %{_sharedstatedir}/tuskar
 %dir %attr(0750, root, apache) %{_sysconfdir}/tuskar
 %config(noreplace) %{_sysconfdir}/httpd/conf.d/tuskar.conf
 %config(noreplace) %attr(0640, root, apache) %{_sysconfdir}/tuskar/tuskar.conf
 
 %changelog
-* Thu Feb 20 2014 Jordan OMara <jomara@redhat.com> 0.8-1
-- New spec (jomara@redhat.com)
-- Setting oslo pkg (jomara@redhat.com)
-
 * Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> 0.7-1
 - Adding PBR to buildrequires (jomara@redhat.com)
 

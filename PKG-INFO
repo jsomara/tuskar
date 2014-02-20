@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: tuskar 
+Version: 0.7 
+Summary: The OpenStack Dashboard part 2.
+Home-page: https://github.com/openstack/horizon/
+Author: OpenStack
+Author-email: horizon@lists.launchpad.net
+License: Apache 2.0
+Description: =============================
+        Tuskar 
+        =============================
+        
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Framework :: Flask 
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python
+Classifier: Topic :: Internet :: WWW/HTTP
+Classifier: Environment :: OpenStack

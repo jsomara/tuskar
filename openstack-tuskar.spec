@@ -12,6 +12,7 @@ BuildRequires: python2-devel
 BuildRequires: python-setuptools
 BuildRequires: python-lockfile
 BuildRequires: python-pbr
+BuildRequires: python-sphinx >= 1.1.3
 
 Requires: httpd
 Requires: mod_wsgi
@@ -51,11 +52,13 @@ datacenter.
 %setup -q -n openstack-tuskar-%{version}
 
 %build
+export OSLO_PACKAGE_VERSION=1.2.0
 %{__python} setup.py build
 
 %install
+export OSLO_PACKAGE_VERSION=1.2.0
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
-install -m 0644 -D -p %{buildroot}%{_datadir}/etc/tuskar-httpd.conf  %{buildroot}%{_sysconfdir}/httpd/conf.d/tuskar.conf
+install -m 0644 -D -p %{buildroot}/etc/tuskar-httpd.conf  %{buildroot}%{_sysconfdir}/httpd/conf.d/tuskar.conf
 
 install -d -m 755 %{buildroot}%{_datadir}/tuskar
 install -d -m 755 %{buildroot}%{_sharedstatedir}/tuskar

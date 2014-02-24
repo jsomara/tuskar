@@ -22,7 +22,7 @@
 #tuskar_api_port=8585
 
 # Local path holding tripleo-heat-templates (string value)
-#tht_local_dir=/etc/tuskar/tripleo-heat-templates/
+tht_local_dir=/usr/share/tripleo-heat-templates/
 
 
 #

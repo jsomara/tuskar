@@ -35,6 +35,7 @@ Requires: python-flask
 Requires: python-flask-babel
 Requires: python-pecan
 Requires: python-wsme
+Requires: python-six >= 1.4.0
 Requires: PyYAML
 Requires: python-oslo-config
 Requires: python-novaclient

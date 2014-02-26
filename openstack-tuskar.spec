@@ -7,6 +7,7 @@ Group:		  Application/System
 License:	  ASL 2.0
 URL:		    https://github.com/openstack/tuskar
 Source0:	  http://file.rdu.redhat.com/~jomara/tuskar/tuskar-%{version}.tar.gz
+Source1:    openstack-tuskar-api.service
 
 BuildArch:     noarch
 
@@ -16,8 +17,6 @@ BuildRequires: python-lockfile
 BuildRequires: python-pbr
 BuildRequires: python-sphinx >= 1.1.3
 
-Requires: httpd
-Requires: mod_wsgi
 Requires: python-pbr
 Requires: python-sqlalchemy
 Requires: python-migrate
@@ -61,7 +60,6 @@ export OSLO_PACKAGE_VERSION=1.2.0
 %install
 export OSLO_PACKAGE_VERSION=1.2.0
 %{__python} setup.py install -O1 --skip-build --root %{buildroot}
-install -m 0644 -D -p etc/tuskar-httpd.conf  %{buildroot}%{_sysconfdir}/httpd/conf.d/tuskar.conf
 
 install -d -m 755 %{buildroot}%{_sharedstatedir}/tuskar
 install -d -m 755 %{buildroot}%{_sysconfdir}/tuskar
@@ -71,6 +69,10 @@ install -m 0644 -D -p etc/tuskar.wsgi  %{buildroot}/srv/tuskar/tuskar.wsgi
 
 # Move config to /etc
 mv etc/tuskar/tuskar.conf.sample %{buildroot}%{_sysconfdir}/tuskar/tuskar.conf
+
+# install systemd scripts
+mkdir -p %{buildroot}/usr/lib/systemd/system/
+install -p -D -m 644 %{SOURCE1} %{buildroot}%{_prefix}/lib/systemd/system/
 
 %files
 %doc LICENSE README.rst
@@ -83,11 +85,22 @@ mv etc/tuskar/tuskar.conf.sample %{buildroot}%{_sysconfdir}/tuskar/tuskar.conf
 %dir /srv/tuskar
 /srv/tuskar/tuskar.wsgi
 %{_sharedstatedir}/tuskar
-%dir %attr(0750, root, apache) %{_sysconfdir}/tuskar
-%config(noreplace) %{_sysconfdir}/httpd/conf.d/tuskar.conf
-%config(noreplace) %attr(0640, root, apache) %{_sysconfdir}/tuskar/tuskar.conf
+%dir %attr(0750, root, tuskar) %{_sysconfdir}/tuskar
+%config(noreplace) %attr(0640, root, tuskar) %{_sysconfdir}/tuskar/tuskar.conf
+
+# TODO - Switch to a statid UID/GID allocation https://fedorahosted.org/fpc/ticket/396
+%pre
+getent group tuskar >/dev/null || groupadd -r tuskar
+getent passwd tuskar >/dev/null || \
+    useradd -r -g tuskar -d %{_sharedstatedir}/tuskar -s /sbin/nologin \
+-c "OpenStack Tuskar Daemons" tuskar
+exit 0
+
 
 %changelog
+* Wed Feb 26 2014 Jordan OMara <jomara@redhat.com> 0.7-2
+- Adding PBR to buildrequires (jomara@redhat.com)
+
 * Wed Feb 19 2014 Jordan OMara <jomara@redhat.com> 0.7-1
 - Adding PBR to buildrequires (jomara@redhat.com)
 
